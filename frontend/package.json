@@ -1,0 +1,10 @@
+{
+  "name": "@falvorn/worldops-control-room",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser-native operator control room with no runtime npm dependencies",
+  "scripts": {
+    "check": "node --check src/api.js && node --check src/main.js && node --check src/render.js"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-11-11T14:21:57.785633+00:00",
+  "method": "controlled heuristic simulation; no benchmark equivalence asserted",
+  "invariant_checks": {
+    "no_unapproved_external_dispatch": true,
+    "equal_turn_budget": true,
+    "untrusted_feed_labeled": true
+  },
+  "cases": [
+    {
+      "id": "5115af7d-57fc-49c4-881e-a5b379deadca",
+      "mode": "control",
+      "metrics": {
+        "world_id": "5115af7d-57fc-49c4-881e-a5b379deadca",
+        "turn": 160,
+        "agents": 8,
+        "average_energy": 54.5,
+        "total_credits": 492,
+        "credit_gini": 0.2058,
+        "model_calls": 0,
+        "safety_blocks": 0,
+        "actions": 161,
+        "conversations": 50,
+        "work_completed": 28,
+        "movement": 50,
+        "external_feed_events": 0,
+        "approved_actions": {},
+        "governance": {},
+        "verified_memories": 66,
+        "untrusted_memories": 50,
+        "event_breakdown": {
+          "move": 50,
+          "reflect": 18,
+          "rest": 14,
+          "talk": 50,
+          "work": 28,
+          "world_created": 1
+        }
+      }
+    },
+    {
+      "id": "0e20f6c5-c425-44e6-abe2-97276bf55e71",
+      "mode": "stressed",
+      "metrics": {
+        "world_id": "0e20f6c5-c425-44e6-abe2-97276bf55e71",
+        "turn": 160,
+        "agents": 8,
+        "average_energy": 52.2,
+        "total_credits": 510,
+        "credit_gini": 0.1897,
+        "model_calls": 0,
+        "safety_blocks": 0,
+        "actions": 164,
+        "conversations": 43,
+        "work_completed": 30,
+        "movement": 49,
+        "external_feed_events": 3,
+        "approved_actions": {},
+        "governance": {},
+        "verified_memories": 72,
+        "untrusted_memories": 43,
+        "event_breakdown": {
+          "external_feed": 3,
+          "move": 49,
+          "reflect": 24,
+          "rest": 14,
+          "talk": 43,
+          "work": 30,
+          "world_created": 1
+        }
+      }
+    }
+  ]
+}

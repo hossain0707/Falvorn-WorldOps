@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0a101c" />
+  <meta name="description" content="Falvorn WorldOps — safe autonomous multi-agent simulation and operations control room." />
+  <title>WorldOps — Falvorn AI</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon"><span>F</span></div><div><strong>FALVORN<span class="brand-ai">AI</span></strong><small>WORLDOPS / CONTROL</small></div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <button class="nav-link active" id="nav-dashboard"><span class="nav-symbol">⬡</span> Control Center <span class="nav-dot"></span></button>
+      <div class="nav-label spaced">WORLDS <button id="new-world-shortcut" class="plus-button" title="New World">+</button></div>
+      <div id="world-list" class="world-list"></div>
+      <div class="sidebar-bottom"><div class="safety-tag"><span class="live-dot"></span> SAFETY GATE ACTIVE</div><div class="side-note">Independent agent research platform<br />Human-in-the-loop by design</div><a href="/docs" class="docs-link" target="_blank">API documentation ↗</a></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumb">WORKSPACE <span>/</span> <b>CONTROL CENTER</b></div>
+        <div class="topbar-right"><span id="connection" class="connection"><i></i> Connecting</span><button id="open-key" class="minor-btn">API KEY</button><div class="avatar">F</div></div>
+      </header>
+      <div class="content">
+        <div class="headline"><div><div class="eyebrow"><span class="glowline"></span> AUTONOMOUS SYSTEM INTELLIGENCE</div><h1>World<span class="accent">Ops</span> <span class="heading-light">Control Center</span></h1><p>Observe, orchestrate and govern persistent AI societies in real time.</p></div><div class="header-actions"><button id="create-world" class="btn secondary">+ New world</button><button id="toggle-running" class="btn primary" disabled>▶ Start simulation</button></div></div>
+        <div class="worldbar"><div class="worldbar-title"><span class="worldbar-icon">◈</span><div><strong id="world-title">No active world</strong><small id="world-subtitle">Create a world to get started</small></div></div><div class="worldbar-actions"><span id="world-badge" class="status-badge">OFFLINE</span><button id="step-one" disabled class="mini-button">+1 turn</button><button id="step-ten" disabled class="mini-button">+10 turns</button><button id="refresh" class="mini-button" title="Refresh">↻</button></div></div>
+        <section class="stats" aria-label="World metrics">
+          <div class="stat-card"><div class="stat-head">ACTIVE AGENTS <span class="stat-icon purple">♧</span></div><div class="stat-value" id="metric-agents">—</div><div class="stat-foot">Independent identities</div></div>
+          <div class="stat-card"><div class="stat-head">SIMULATION TURNS <span class="stat-icon blue">⌁</span></div><div class="stat-value" id="metric-turns">—</div><div class="stat-foot">Persisted world decisions</div></div>
+          <div class="stat-card"><div class="stat-head">SYSTEM ENERGY <span class="stat-icon green">↗</span></div><div class="stat-value" id="metric-energy">—</div><div class="stat-foot">Average agent energy</div></div>
+          <div class="stat-card"><div class="stat-head">SAFETY INTERCEPTS <span class="stat-icon amber">◇</span></div><div class="stat-value" id="metric-blocks">—</div><div class="stat-foot">Rejected actions</div></div>
+        </section>
+        <section class="workspace-grid">
+          <div class="map-panel panel"><div class="panel-head"><div><div class="panel-overline">LIVE ENVIRONMENT</div><h2>World Map <span class="subtle">/ ISOMETRIC</span></h2></div><span class="live-indicator"><span class="live-dot"></span> LIVE STATE</span></div><div class="map-shell"><div class="map-grid-lines"></div><svg id="world-svg" viewBox="0 0 900 545" role="img" aria-label="Isometric map of the world and its agents"><text x="450" y="250" fill="#66718b" text-anchor="middle">Create a world to begin</text></svg><div class="map-key"><span><b class="key-dot k-agent"></b>Agent</span><span><b class="key-dot k-place"></b>Location</span><span><b class="key-dot k-hub"></b>Governance hub</span></div></div><div class="map-bottom"><div class="map-bottom-left"><span class="map-pulse">●</span><span id="map-foot">WORLD STATE IDLE</span></div><span>6 CONNECTED ZONES</span></div></div>
+          <div class="activity-panel panel"><div class="panel-head"><div><div class="panel-overline">AUDITABLE HISTORY</div><h2>Activity Stream</h2></div><span class="feed-state">● LIVE</span></div><div id="feed" class="feed"><div class="empty-feed">Events will appear here as agents act.</div></div><div class="feed-bottom"><button id="inject-feed" class="plain-btn">+ Inject untrusted event</button><span>APPEND-ONLY LOG</span></div></div>
+        </section>
+        <section class="lower-grid">
+          <div class="panel agents-panel"><div class="panel-head"><div><div class="panel-overline">ACTIVE POPULATION</div><h2>Agents <span id="agent-count" class="count-label">0</span></h2></div><button class="plain-btn" id="add-agent">+ Add agent</button></div><div id="agents" class="agent-grid"><p class="muted">No agents yet.</p></div></div>
+          <div class="panel review-panel"><div class="panel-head"><div><div class="panel-overline">HUMAN GOVERNANCE</div><h2>Approval Queue <span id="approval-count" class="count-label">0</span></h2></div><span class="shield-chip">◈ GATED</span></div><div id="approvals" class="approval-list"><p class="muted">No approvals pending.</p></div><div class="review-foot">External side effects require explicit review and a configured gateway.</div></div>
+        </section>
+        <footer class="footer">FALVORN AI <span>•</span> WORLDOPS 0.1.0 <span>•</span> SANDBOX BY DEFAULT <span class="right">Independent platform informed by published research</span></footer>
+      </div>
+    </main>
+  </div>
+  <dialog id="dialog"><form method="dialog" id="dialog-form"><div class="modal-head"><h2 id="dialog-title">Create world</h2><button class="x-btn" value="cancel" aria-label="Close">×</button></div><div id="dialog-fields"></div><div class="modal-actions"><button class="btn secondary" value="cancel">Cancel</button><button class="btn primary" type="submit" id="dialog-submit" value="confirm">Confirm</button></div></form></dialog>
+  <script type="module" src="/assets/main.js"></script>
+</body>
+</html>
