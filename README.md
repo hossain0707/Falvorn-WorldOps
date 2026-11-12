@@ -20,7 +20,7 @@ Explore social dynamics in persistent simulations, trace every decision, and kee
 
 <br />
 
-[**Explore showcase**](docs/showcase/index.html) · [**Get started**](#-quickstart) · [**Architecture**](#-animated-architecture) · [**Security model**](#-safety-by-architecture) · [**Full documentation**](#-documentation)
+[**Launch live animated showcase**](https://falvorn-worldops-showcase.vercel.app/) · [**Get started**](#-quickstart) · [**Architecture**](#-animated-architecture) · [**Security model**](#-safety-by-architecture) · [**Full documentation**](#-documentation)
 
 <br />
 
@@ -60,7 +60,7 @@ The live application is a browser-native **WorldOps Control Center** served by F
 The companion interactive showcase is **zero-install HTML** with animated agents, a working run/step/reset control, scenario selection, and demonstration event feed. It illustrates the intended experience; it does **not** run backend inference or represent real scientific findings.
 
 <div align="center">
-<a href="docs/showcase/index.html"><img src="docs/assets/worldops-hero.svg" width="78%" alt="Animated visual identity preview, not a recorded live application" /></a>
+<a href="https://falvorn-worldops-showcase.vercel.app/"><img src="docs/assets/worldops-hero.svg" width="78%" alt="Animated visual identity preview, not a recorded live application" /></a>
 
 <sub>Illustrative animation — for actual application behavior, run the backend using the quickstart below.</sub>
 </div>
@@ -68,16 +68,16 @@ The companion interactive showcase is **zero-install HTML** with animated agents
 | Experience | How to access | Connected to real backend? |
 | :-- | :-- | :--: |
 | **Control Center** | Start FastAPI → open [http://127.0.0.1:8000](http://127.0.0.1:8000) | ✅ |
-| **Interactive showcase** | Serve [docs/showcase/index.html](docs/showcase/index.html) locally | ❌ |
+| **Interactive showcase** | [Open public animated demo](https://falvorn-worldops-showcase.vercel.app/) or serve [standalone source](docs/showcase/index.html) locally | ❌ |
 | **OpenAPI explorer** | Start FastAPI → open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) | ✅ |
 
-To view the no-install animated showcase from the repository root:
+**Public interactive preview:** [falvorn-worldops-showcase.vercel.app](https://falvorn-worldops-showcase.vercel.app/). To run the same standalone showcase locally from the repository root:
 
 ```bash
 python -m http.server 8088 --directory docs/showcase
 ```
 
-Open **http://127.0.0.1:8088**. This is a locally served static preview, not a hosted service. To publish a public showcase URL, deploy only the static \`docs/showcase\` directory; see [SHOWCASE.md](docs/SHOWCASE.md).
+Open **http://127.0.0.1:8088**. This is a locally served static preview, not a hosted service. The public preview deploys only the static showcase, not backend services. See [SHOWCASE.md](docs/SHOWCASE.md) for deployment details.
 
 ## ⬡ Animated architecture
 
