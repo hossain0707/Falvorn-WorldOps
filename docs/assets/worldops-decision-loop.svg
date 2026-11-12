@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 382" role="img" aria-labelledby="title desc">
+<title id="title">Animated WorldOps decision loop</title><desc id="desc">Six-stage simulation decision flow from world snapshot to safe action, persistent audit, and operator intervention.</desc>
+<defs>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0c1427"/><stop offset="1" stop-color="#13293c"/></linearGradient>
+<linearGradient id="cyan"><stop stop-color="#9a7afb"/><stop offset="1" stop-color="#5be6d2"/></linearGradient>
+<marker id="head" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#6084a2"/></marker>
+<style>.label{font:700 18px Inter,Segoe UI,Arial,sans-serif;fill:#f2f5ff}.small{font:13px Inter,Segoe UI,Arial,sans-serif;fill:#9babc2}.num{font:800 11px Inter,Segoe UI,Arial,sans-serif;fill:#75ecd5;letter-spacing:1px}.step{fill:#18273e;stroke:#38506f;stroke-width:1.5}.line{fill:none;stroke:#6683a2;stroke-width:2;marker-end:url(#head)}</style>
+</defs>
+<rect width="1200" height="382" rx="17" fill="url(#bg)"/>
+<text x="35" y="45" font-size="12" fill="#77e6d5" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="2">PER-WORLD TURN • TRANSACTIONAL DECISION CYCLE</text>
+<g>
+<path class="line" d="M206 165H233"/><path class="line" d="M395 165H424"/><path class="line" d="M587 165H616"/><path class="line" d="M779 165H807"/><path class="line" d="M971 165H1000"/>
+</g>
+<g>
+<rect class="step" x="35" y="98" width="172" height="134" rx="14"/><text x="52" y="124" class="num">01 / READ</text><text x="52" y="165" class="label">World snapshot</text><text x="52" y="193" class="small">State + memory</text><text x="52" y="213" class="small">+ trust labels</text>
+<rect class="step" x="233" y="98" width="163" height="134" rx="14"/><text x="251" y="124" class="num">02 / REASON</text><text x="251" y="165" class="label">Strategy</text><text x="251" y="193" class="small">Heuristic or</text><text x="251" y="213" class="small">allowlisted LLM</text>
+<rect class="step" x="424" y="98" width="164" height="134" rx="14"/><text x="442" y="124" class="num">03 / PROPOSE</text><text x="442" y="165" class="label">Candidate</text><text x="442" y="193" class="small">Structured action</text><text x="442" y="213" class="small">untrusted output</text>
+<rect x="616" y="98" width="164" height="134" rx="14" fill="#183a44" stroke="#62dfc9" stroke-width="2"/><text x="634" y="124" class="num">04 / ENFORCE</text><text x="634" y="165" class="label">Safety gate</text><text x="634" y="193" class="small">Policy + state</text><text x="634" y="213" class="small">invariants</text>
+<rect class="step" x="807" y="98" width="165" height="134" rx="14"/><text x="826" y="124" class="num">05 / COMMIT</text><text x="826" y="165" class="label">Persistence</text><text x="826" y="193" class="small">Atomic mutation</text><text x="826" y="213" class="small">+ event audit</text>
+<rect class="step" x="1000" y="98" width="165" height="134" rx="14"/><text x="1018" y="124" class="num">06 / OBSERVE</text><text x="1018" y="165" class="label">Dashboard</text><text x="1018" y="193" class="small">Metrics + human</text><text x="1018" y="213" class="small">approval queue</text>
+</g>
+<g><circle r="4" fill="#8f80fd"><animateMotion dur="10s" repeatCount="indefinite" path="M190 165 H1150"/></circle><circle r="5" fill="#78e8cb"><animateMotion dur="10s" begin="-5s" repeatCount="indefinite" path="M190 165 H1150"/></circle></g>
+<path d="M695 233 V280 H1080 V234" fill="none" stroke="#e6b975" stroke-dasharray="6 7" stroke-width="1.5"/>
+<text x="887" y="296" text-anchor="middle" fill="#ebc891" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="13">Outbound side effects require a separate human approval and dispatch step</text>
+<rect x="36" y="332" width="1128" height="29" rx="12" fill="#0b2032"/>
+<circle cx="58" cy="347" r="4" fill="#72e5cc"><animate attributeName="opacity" dur="2s" values=".2;1;.2" repeatCount="indefinite"/></circle>
+<text x="72" y="352" fill="#a6bdd0" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12">Agent output cannot directly grant capabilities, bypass validation, or call arbitrary external destinations.</text>
+<rect x="1" y="1" width="1198" height="380" rx="16" fill="none" stroke="#2b465d"/>
+</svg>

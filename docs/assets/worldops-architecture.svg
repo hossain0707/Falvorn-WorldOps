@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 610" role="img" aria-labelledby="t d">
+<title id="t">WorldOps animated platform architecture</title><desc id="d">Operator UI and scheduled worker route into FastAPI, orchestration, action validation, PostgreSQL, and a human approval webhook gate. Moving markers indicate conceptual data flow.</desc>
+<defs>
+<linearGradient id="back" x2="1" y2="1"><stop stop-color="#080f20"/><stop offset="1" stop-color="#122438"/></linearGradient>
+<linearGradient id="hi"><stop stop-color="#8c6bfd"/><stop offset="1" stop-color="#4fded3"/></linearGradient>
+<filter id="shine"><feGaussianBlur stdDeviation="4"/></filter>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#5a8198"/></marker>
+<style>
+  .panel{fill:#14243c;stroke:#36516f;stroke-width:1.5}.name{font:700 18px Inter,Segoe UI,Arial,sans-serif;fill:#f4f6fd}.sub{font:13px Inter,Segoe UI,Arial,sans-serif;fill:#91a6c0}.ey{font:700 12px Inter,Segoe UI,Arial,sans-serif;fill:#80e5d1;letter-spacing:1.8px}.wire{stroke:#426786;stroke-width:2.3;fill:none;marker-end:url(#arrow)}.packet{fill:#72e8d5;filter:url(#shine)}
+</style>
+</defs>
+<rect width="1200" height="610" rx="18" fill="url(#back)"/><text x="46" y="48" class="ey">PLATFORM ARCHITECTURE / SYSTEM BOUNDARIES</text><text x="46" y="81" class="sub">Illustrative dataflow — connectors and public SaaS controls remain release-gated</text>
+<g>
+<path class="wire" d="M244 177 H304"/><path class="wire" d="M244 355 H304"/><path class="wire" d="M523 270 H588"/><path class="wire" d="M799 270 H862"/>
+<path class="wire" d="M690 343 V410"/><path class="wire" d="M970 343 V410"/>
+<path class="wire" d="M910 498 H790 V527 H599 V493"/>
+<path class="wire" d="M965 179 V118 H416 V177"/>
+</g>
+<!-- nodes -->
+<g><rect class="panel" x="46" y="111" width="198" height="133" rx="15"/><circle cx="76" cy="143" r="9" fill="#9c85ff"/><text x="96" y="149" class="name">Control room</text><text x="66" y="180" class="sub">Operator UI</text><text x="66" y="202" class="sub">Read / command / review</text></g>
+<g><rect class="panel" x="46" y="290" width="198" height="133" rx="15"/><circle cx="76" cy="323" r="9" fill="#6fe6cf"/><text x="96" y="329" class="name">Scheduler</text><text x="66" y="360" class="sub">PG advisory leader</text><text x="66" y="382" class="sub">Ordered world turns</text></g>
+<g><rect x="304" y="176" width="219" height="167" rx="17" fill="#1b2844" stroke="#997bf8" stroke-width="2"/><text x="325" y="213" class="ey">API BOUNDARY</text><text x="325" y="246" class="name">FastAPI + Auth</text><text x="325" y="277" class="sub">Request validation</text><text x="325" y="299" class="sub">World control / approvals</text></g>
+<g><rect class="panel" x="588" y="190" width="211" height="153" rx="16"/><text x="608" y="226" class="ey">DECISION ENGINE</text><text x="608" y="260" class="name">Transactional turns</text><text x="608" y="290" class="sub">Heuristic / allowlisted</text><text x="608" y="313" class="sub">LLM action proposals</text></g>
+<g><rect x="862" y="190" width="291" height="153" rx="16" fill="#123c45" stroke="#55dfc7" stroke-width="2"/><text x="882" y="226" class="ey">NON-BYPASSABLE</text><text x="882" y="260" class="name">Action safety policy</text><text x="882" y="291" class="sub">Validate intent, capability</text><text x="882" y="313" class="sub">and state invariants</text></g>
+<g><rect class="panel" x="588" y="410" width="211" height="84" rx="14"/><text x="608" y="446" class="name">PostgreSQL</text><text x="608" y="470" class="sub">Worlds · memory · audit</text></g>
+<g><rect x="862" y="410" width="291" height="87" rx="15" fill="#3c3044" stroke="#ceac75" stroke-width="2"/><text x="884" y="444" class="name">Human approval</text><text x="884" y="470" class="sub">Approve, then manual dispatch</text></g>
+<g><rect x="301" y="503" width="298" height="72" rx="14" fill="#182d3b" stroke="#40657e"/><text x="323" y="531" class="name">Signed HTTPS webhook</text><text x="323" y="555" class="sub">Fixed destination · HMAC · idempotency</text></g>
+<g opacity=".9">
+<circle r="5" class="packet"><animateMotion dur="3s" repeatCount="indefinite" path="M244 177 H304"/></circle>
+<circle r="5" class="packet"><animateMotion dur="3.4s" repeatCount="indefinite" path="M244 355 H304"/></circle>
+<circle r="5" class="packet"><animateMotion dur="3.6s" repeatCount="indefinite" path="M523 270 H588"/></circle>
+<circle r="5" class="packet"><animateMotion dur="3.8s" repeatCount="indefinite" path="M799 270 H862"/></circle>
+<circle r="4" class="packet"><animateMotion dur="3.5s" repeatCount="indefinite" path="M690 343 V410"/></circle>
+<circle r="4" fill="#ffcc88"><animateMotion dur="4.4s" repeatCount="indefinite" path="M970 343 V410"/></circle>
+</g>
+<text x="45" y="573" class="sub">Research isolation is enforced at the action boundary; social governance cannot grant system capabilities.</text>
+<rect x="1" y="1" width="1198" height="608" rx="17" fill="none" stroke="#2c3e56"/>
+</svg>

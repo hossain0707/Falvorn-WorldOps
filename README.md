@@ -1,158 +1,283 @@
+<div align="center">
+
+<img src="docs/assets/worldops-hero.svg" width="100%" alt="Falvorn WorldOps — an animated isometric multi-agent world with Falvorn AI branding" />
+
+<br />
+
 # Falvorn WorldOps
 
-**Independent, governed multi-agent simulation and operational sandbox**  
-**Release: 0.2.0 — internally tested foundation for controlled pilots; not certified for public or high-stakes production use.**
+**A governed control plane for autonomous multi-agent worlds.**  
+Explore social dynamics in persistent simulations, trace every decision, and keep real-world side effects behind human authorization.
 
-An original implementation motivated by the engineering questions in [*Emergence World: A Platform for Evaluating Long-Horizon Multi-Agent Autonomy*](https://arxiv.org/abs/2606.08367) (2026) and [*Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems*](https://arxiv.org/abs/2609.17320) (2026). Source reference: [EmergenceAI/Emergence-World](https://github.com/EmergenceAI/Emergence-World).
+<br />
 
-**Independence and licensing:** This repository does **not** bundle, fork or reproduce the Emergence AI repository's agent profiles, datasets, architecture files or other licensed assets. Those are released under research-only CC BY-NC terms; commercial use of that content requires separate permission. We use high-level scientific ideas and independently authored software, personas, world layout, and test scenarios. This is not a faithful research replication and does not claim the published results.
+[![Release](https://img.shields.io/badge/release-v0.2.0-9B83F8?style=for-the-badge)](CHANGELOG.md)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](backend/pyproject.toml)
+[![API](https://img.shields.io/badge/API-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](docs/API.md)
+[![Database](https://img.shields.io/badge/DB-PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](docs/ARCHITECTURE.md)
+[![Security](https://img.shields.io/badge/safety-human--gated-2a9d8f?style=for-the-badge)](SECURITY.md)
+[![License](https://img.shields.io/badge/license-proprietary-64748b?style=for-the-badge)](LICENSE)
 
-## At a glance
+<br />
 
-| Area | Stack / boundary |
-|---|---|
-| API | Python 3.11+, FastAPI + Pydantic; `/api/v1` OpenAPI |
-| Persistence | PostgreSQL + SQLAlchemy + Alembic; SQLite development only |
-| Dashboard | Browser-native HTML/CSS/ES modules; no Node build required |
-| AI engine | Reproducible heuristic agent; opt-in OpenAI-compatible provider behind allowlist |
-| Execution | Transactional world actions + server-side invariant enforcement |
-| Real-world effects | Human-reviewed, manually dispatched, HMAC-signed HTTPS webhook only |
-| Auth | Distinct admin and optional read-only keys for **private** deployments; edge OIDC/VPN required |
-| Worker | PostgreSQL advisory leader election; not yet a distributed LLM queue |
-| Licenses | Proprietary original code, all rights reserved; research referenced but not copied |
+[**Explore showcase**](docs/showcase/index.html) · [**Get started**](#-quickstart) · [**Architecture**](#-animated-architecture) · [**Security model**](#-safety-by-architecture) · [**Full documentation**](#-documentation)
 
-## What runs now
+<br />
 
-- **Persistent world state:** transactional turn progression, worlds, fictional agent populations, places, credits, energy, conversations, social trust, governance proposals/votes, memory provenance, and append-only events.
-- **Model adapters:** reproducible heuristic agents at zero API cost, with an opt-in *OpenAI-compatible* chat completion adapter for specifically server-allowed model IDs. A provider adapter is not proof that the named model is available; configure a working provider endpoint/API key first.
-- **Two environments:** town/research sandbox and workplace simulation.
-- **Operator control:** create/start/pause worlds, manual and scheduled turns, add agents, inspect memories and statistics, inject untrusted test messages, perform audited test actions.
-- **Safety envelope:** tool/action allowlists; input constraints; untrusted source labels; server-side safety invariant enforcement; signed human-approved-only outbound webhook; no arbitrary code/shell/browser/network execution by agents; status transitions audited.
-- **Visibility:** live-refresh web control room with an isometric visualization, activity feed, agent inspection and approval management; OpenAPI at `/docs`.
-- **Deployment foundations:** versioned Alembic migration, PostgreSQL deployment database, leader-elected worker, nonroot/read-only API containers, environment validation, reverse-proxy-ready API, and tests.
+> **Release status — controlled pilots.** Source is publicly viewable, but it is **not open-source software** and **not production-certified for public multi-tenant SaaS**. See [release gates](docs/RELEASE_CHECKLIST.md). Animated visuals are conceptual and the standalone showcase uses simulated data.
 
-## Structure
+</div>
 
-```text
-backend/
-  app/
-    api/            REST request parsing, authorization and lifecycle
-    core/           environment, database/session settings
-    domain/         persistence models and validated schemas
-    services/       transactional engine, LLM strategy, metrics, safety gateway, seeds
-    evaluations.py  independent red-team/control study runner
-    worker.py       single-replica scheduler
-  alembic/          checked-in initial schema migration
-  tests/            HTTP, governance, safety and invariant tests
-  pyproject.toml
-frontend/
-  index.html        control room shell
-  src/             isolated ES modules and responsive styling
-infra/
-  docker-compose.yml
-  .env.example
+---
 
-docs/
-  ARCHITECTURE.md
-  THREAT_MODEL.md
-  OPERATIONS.md
-  DEPLOYMENT.md
-  RELEASE_CHECKLIST.md
-  API.md
-```
+## ✦ Why WorldOps?
 
-## Run locally (development)
+Multi-agent systems become interesting when individual decisions interact across time: agents remember, trade, coordinate, misinterpret, disagree, and influence each other. A compelling simulation is not just a chat window full of personas. It needs **state**, **repeatability**, **observability**, and **rules that cannot be rewritten by the agents themselves**.
+
+WorldOps separates *agent intent* from *system authority*. It combines a persistent world engine with bounded agent strategies, a transactional action validator, an append-only event trail, and a manual approval path for external effects.
+
+<table>
+<tr>
+<td width="33%" valign="top">
+<h3>◈ Persistent worlds</h3>
+Seeded research towns and workplace environments with agents, locations, credits, energy, memory, and governance.
+</td>
+<td width="33%" valign="top">
+<h3>✳ Observable behavior</h3>
+Turn-by-turn state changes, event timelines, safety intercepts, memories with source labels, and reproducible evaluation runs.
+</td>
+<td width="34%" valign="top">
+<h3>◇ Human authority</h3>
+Agent-proposed external actions cannot execute by themselves. Operators review and deliberately dispatch via a configured signed gateway.
+</td>
+</tr>
+</table>
+
+## ◇ Product preview
+
+The live application is a browser-native **WorldOps Control Center** served by FastAPI. It displays an isometric world, agent roster, metrics, activity timeline, and approval queue.
+
+The companion interactive showcase is **zero-install HTML** with animated agents, a working run/step/reset control, scenario selection, and demonstration event feed. It illustrates the intended experience; it does **not** run backend inference or represent real scientific findings.
+
+<div align="center">
+<a href="docs/showcase/index.html"><img src="docs/assets/worldops-hero.svg" width="78%" alt="Animated visual identity preview, not a recorded live application" /></a>
+
+<sub>Illustrative animation — for actual application behavior, run the backend using the quickstart below.</sub>
+</div>
+
+| Experience | How to access | Connected to real backend? |
+| :-- | :-- | :--: |
+| **Control Center** | Start FastAPI → open [http://127.0.0.1:8000](http://127.0.0.1:8000) | ✅ |
+| **Interactive showcase** | Serve [docs/showcase/index.html](docs/showcase/index.html) locally | ❌ |
+| **OpenAPI explorer** | Start FastAPI → open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) | ✅ |
+
+To view the no-install animated showcase from the repository root:
 
 ```bash
-cd backend
+python -m http.server 8088 --directory docs/showcase
+```
+
+Open **http://127.0.0.1:8088**. This is a locally served static preview, not a hosted service. To publish a public showcase URL, deploy only the static \`docs/showcase\` directory; see [SHOWCASE.md](docs/SHOWCASE.md).
+
+## ⬡ Animated architecture
+
+<img src="docs/assets/worldops-architecture.svg" width="100%" alt="Animated data-flow diagram: operator and scheduler through FastAPI, transactional world service, safety policy, persistence, and human-approved webhook" />
+
+The diagram distinguishes **decision authority** from **execution authority**. All candidate actions are validated against server-defined capabilities and state constraints. Social world policies cannot unlock arbitrary shell, network, or external tool access.
+
+<details>
+<summary><b>Text-based architecture (accessible alternative)</b></summary>
+
+```mermaid
+flowchart LR
+  UI[Operator control room] --> API[FastAPI and request auth]
+  Scheduler[PostgreSQL leader scheduler] --> Engine[Transactional world engine]
+  API --> Engine
+  Engine --> Strategy[Heuristic or allowlisted LLM]
+  Strategy --> Policy{Deterministic action validator}
+  Policy -->|Allowed| DB[(PostgreSQL: state + event audit)]
+  Policy -->|Rejected| DB
+  API --> Approval[Human approval + manual dispatch]
+  Approval --> Webhook[Fixed HMAC-signed HTTPS gateway]
+```
+
+</details>
+
+**Design principles:** explicit trust boundaries · durable world state · isolated model adapters · provenance on memories · auditability · reversible experiments · human authorization for external effects.
+
+For a full service-boundary walkthrough, concurrency assumptions, data invariants and scale-up plan, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## ↺ Decision cycle & workflow
+
+<img src="docs/assets/worldops-decision-loop.svg" width="100%" alt="Animated six-stage world decision cycle from state snapshot through reasoning, action validation, persistence, and observation" />
+
+Each turn is a serializable, ordered world operation in the supported PostgreSQL deployment:
+
+1. **Read** committed world state, source-labeled memory, and untrusted feeds.
+2. **Propose** a structured action using a reproducible heuristic or an allowlisted, OpenAI-compatible provider.
+3. **Enforce** scenario, tool, credit, energy, location, and safety constraints on the server.
+4. **Commit** permitted mutations and their event record within the transaction.
+5. **Observe** the resulting state, metrics, and review queue.
+6. **Approve separately** before a configured external action can be manually dispatched.
+
+**Trust rule:** LLM output is an untrusted *proposal*, never an instruction to the host system. Unknown actions are rejected and audited.
+
+## ✦ Capabilities at a glance
+
+| Capability | Current implementation | Boundary / limitation |
+| :-- | :-- | :-- |
+| Persistent simulations | ✅ World state, locations, credits, energy, events | SQLite only for development |
+| Agent strategies | ✅ Deterministic heuristic + OpenAI-compatible adapter | Native Claude/Gemini/Grok adapters not included |
+| Long-horizon experiments | ✅ Seeded turns, memories, comparisons, evaluation runner | Not a reproduction of Emergence AI reported results |
+| Agent social dynamics | ✅ Conversations, trust, proposals, votes | Governance cannot modify system permissions |
+| Operator UI | ✅ Responsive dashboard with isometric map | Live state via refresh/polling, not WebSockets |
+| Safety enforcement | ✅ Allowlisted actions, invariant checks, event audit | Does not guarantee models are immune to manipulation |
+| Real-world action boundary | ✅ Approval then separate signed webhook dispatch | Only configured action types and destination |
+| Worker coordination | ✅ PostgreSQL advisory scheduler leadership | Not a distributed inference/job queue |
+| Public SaaS readiness | 🚧 Not completed | Needs SSO, tenancy, rate limits, monitoring and load tests |
+
+### Two environments, one execution boundary
+
+**Research town** — investigate cooperation, competition, memory provenance, resource use, policy discussions, and action rejection.
+
+**Workplace lab** — test operational decisions where a model may *request* a task or summary, but a trusted operator must explicitly authorize any outward action.
+
+## ⚡ Quickstart
+
+**Requirements:** Python 3.11+ and a modern browser. No Node dependencies for the dashboard. The default deterministic agent mode needs **no paid LLM key**.
+
+```bash
+git clone https://github.com/hossain0707/Falvorn-WorldOps.git
+cd Falvorn-WorldOps/backend
+
 python -m venv .venv
-source .venv/bin/activate                 # Windows: .venv\Scripts\activate
+source .venv/bin/activate             # Windows: .venv\Scripts\activate
 pip install -e '.[dev]'
-cp .env.example .env
+cp .env.example .env                  # Configure for local development
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-Open **http://127.0.0.1:8000**. Click **New world**, use the built-in heuristic agents, then **+10 turns**. An API key is not required in local development only. The browser UI is served by the API; opening `frontend/index.html` directly without the server will not work.
+Now visit **http://127.0.0.1:8000**. Create a world, leave the model on heuristic mode, and run ten turns. Local development permits no-key access; production must use appropriately configured authentication and network controls.
 
-Background turns (optional, *separate terminal*, single instance only):
+Optionally start the single scheduler in another terminal:
 
 ```bash
 cd backend
 python -m app.worker
 ```
 
-The worker advances only worlds that an operator started. World state is persisted in the database across restarts. The worker uses a PostgreSQL advisory lock to elect a single scheduler leader. It is **not** a multi-replica distributed inference queue. Do not run multiple SQLite workers.
+The worker advances only running worlds. **Do not use multiple SQLite workers.**
 
-## Deploy via Docker Compose (controlled private environment)
-
-Create `infra/.env` from `infra/.env.example` and set a strong `POSTGRES_PASSWORD`, random 32+ character `API_KEY` (plus optional distinct `READ_ONLY_API_KEY`), and the precise public `CORS_ORIGINS`. For the Compose database URL, generate hexadecimal passwords to avoid reserved URI characters.
+### Private pilot deployment
 
 ```bash
 cp infra/.env.example infra/.env
-# Edit infra/.env with strong secrets; never commit it
-# Run from repository root:
+# Set strong, distinct credentials and exact CORS_ORIGINS in infra/.env
+docker compose --env-file infra/.env -f infra/docker-compose.yml config
 docker compose --env-file infra/.env -f infra/docker-compose.yml up --build -d
-docker compose --env-file infra/.env -f infra/docker-compose.yml ps
 ```
 
-Services: `db` → `migrate` → `api` and `worker`. The API binds to `127.0.0.1:8000`. Place it **behind HTTPS, authentication and network access controls** (VPN or OIDC reverse proxy). Do not expose this key-only dashboard directly to the public internet. For public multi-user SaaS, replace single admin API key with OIDC session auth, tenant-level RBAC, rate limiting and a distributed worker/queue before launch.
+The Compose stack provides PostgreSQL, a migration job, API, and worker. It binds the API to localhost; run behind **TLS plus identity-aware access control/VPN**. It is **not** safe to expose an admin-key dashboard directly to the public internet. Follow [deployment](docs/DEPLOYMENT.md) and [operations](docs/OPERATIONS.md).
 
-## Enable an LLM-backed agent
+## ⛨ Safety by architecture
 
-In `backend/.env` (local) or your deployment's environment:
-
-```dotenv
-LLM_API_KEY=your_server_side_provider_key
-LLM_BASE_URL=https://api.openai.com/v1
-LLM_ALLOWED_MODELS=gpt-4.1-mini,gpt-4o-mini
+```mermaid
+flowchart TD
+  A[Agent proposal] --> B{Action allowlisted and valid?}
+  B -->|No| C[Block + audit]
+  B -->|Yes| D{External effect?}
+  D -->|No| E[Atomic state update + event]
+  D -->|Yes| F[Create pending approval]
+  F --> G{Operator reviews}
+  G -->|Reject| H[Audit rejection]
+  G -->|Approve| I[Separate manual dispatch]
+  I --> J[Fixed HMAC-signed HTTPS webhook]
 ```
 
-Then add an agent with `provider = openai_compatible`, `model = gpt-4.1-mini`. API credentials are never exposed to agents or the frontend. All LLM output is parsed as **untrusted proposed actions** and revalidated by the backend. If an LLM call fails, a model-fallback event is created and the safe deterministic policy is used. This prototype currently has **one** OpenAI-compatible HTTP adapter; native Anthropic, Google and xAI APIs are not implemented.
+- **No arbitrary tools:** agents cannot execute arbitrary shell commands, browse unrestricted URLs, or choose external destinations.
+- **No implicit authorization:** governance or prompt text cannot elevate host permissions.
+- **Operator control:** external side effects are off until configured, approved, and manually dispatched.
+- **Audit identity:** production operator keys are fingerprinted server-side; user-provided reviewer identities are not trusted.
+- **Pilot restrictions:** native per-user SSO, tenant RBAC, centralized alerts, distributed queueing, and security/load tests are launch blockers.
 
-## Real-world action gateway
+See [SECURITY.md](SECURITY.md), [THREAT_MODEL.md](docs/THREAT_MODEL.md) and [RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
 
-Outbound side effects are **off by default**. In a `workplace` world an agent may only request a `publish_summary` or `create_ticket` action. It becomes a `pending` approval. An operator must explicitly approve and then separately **dispatch** it. The dispatcher posts a JSON payload to a **single server-configured HTTPS webhook** with `X-WorldOps-Signature: sha256=...` (HMAC-SHA256 over the canonical JSON body) and `Idempotency-Key` equal to the approval UUID. The receiving service should verify both and deduplicate on the key. Agent-provided URLs are impossible.
-
-```dotenv
-WEBHOOK_URL=https://your-controlled-action-gateway.example.com/actions
-WEBHOOK_SIGNING_SECRET=your-long-random-secret-32-chars
-```
-
-This is not a general-purpose connector marketplace. In production, implement destination-specific payload schemas, permissions and dry-run support for each additional real action.
-
-## REST examples
-
-```bash
-# Development mode (no key); in production pass -H 'X-API-Key: ...'
-curl -X POST http://localhost:8000/api/v1/worlds \
-  -H 'Content-Type: application/json' \
-  -d '{"name":"Operations Lab","scenario":"workplace","starter_agents":true,"seed":42}'
-
-curl -X POST http://localhost:8000/api/v1/worlds/WORLD_ID/steps \
-  -H 'Content-Type: application/json' \
-  -H 'Idempotency-Key: my-step-batch-001' \
-  -d '{"count":20}'
-```
-
-Other endpoints are discoverable at `/docs`.
-
-## Test and evaluate
+## ▣ Run tests & evaluations
 
 ```bash
 cd backend
 pytest -q
 python -m app.evaluations --turns 160 --seed 42 --output evaluation.json
-cd ../frontend && npm run check       # syntax checks; no npm dependencies
+
+cd ../frontend
+npm run check
 ```
 
-The evaluator creates two **heuristic** worlds with identical seeds, one with adversarial *untrusted* feed events, checks policy invariants, and reports comparable metrics. This **does not** replicate the original papers' LLM experiments or reproduce their multi-day findings.
+The evaluation compares seeded **heuristic simulations** with and without a simulated adversarial feed. Its output is research-sandbox telemetry, **not** a benchmark of Claude, GPT, Gemini or Grok and **not** a replication of any published paper.
 
-## Operational limitations and release gates
+Testing is intentionally local/manual; **GitHub Actions were not enabled**.
 
-This is a tested reference build **ready for internal experiments**, **not yet a publicly certified production SaaS**. Before real users or connected high-impact tools: integrate SSO/OIDC+tenant RBAC, production audit sinks and alerting, distributed queue with bounded inference, per-tenant budgets and rate limits, encrypted backups and restore drills, operational data retention/deletion, webhook receiver security review, LLM policy/red-team evaluation, and real PostgreSQL/container deployment and load tests. No external provider accounts have been connected and no real-world actions have been dispatched during development.
+## ◫ Project structure
 
-See [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md), [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md), [`docs/OPERATIONS.md`](docs/OPERATIONS.md), [`docs/API.md`](docs/API.md) and [`SECURITY.md`](SECURITY.md) for validation and release gates. GitHub Actions are intentionally **not enabled**; all checks are local/manual.
+```text
+Falvorn-WorldOps/
+├── backend/
+│   ├── app/
+│   │   ├── api/                  # HTTP boundary
+│   │   ├── core/                 # Config, database, auth
+│   │   ├── domain/               # Schemas, persistence
+│   │   └── services/             # Engine, safety, provider, gateway
+│   ├── alembic/                  # Database migration
+│   └── tests/                    # API, governance, safety tests
+├── frontend/
+│   ├── index.html                # Real control room
+│   └── src/                      # JS modules + CSS
+├── docs/
+│   ├── assets/                   # Original animated SVGs
+│   ├── showcase/                 # Standalone animated UX preview
+│   ├── ARCHITECTURE.md
+│   ├── SHOWCASE.md
+│   ├── DEPLOYMENT.md
+│   ├── THREAT_MODEL.md
+│   └── RELEASE_CHECKLIST.md
+├── infra/                        # Docker Compose + env template
+├── scripts/                      # Maintenance utilities
+├── AGENTS.md                     # Contributor/agent working conventions
+└── README.md
+```
 
-## Ownership
+## ▤ Documentation
 
-Original code authored for Falvorn AI; **all rights reserved** unless the owner chooses a license. Research citations and third-party terms remain with their respective holders.
+| Guide | Purpose |
+| :-- | :-- |
+| [Architecture](docs/ARCHITECTURE.md) | Service boundaries, transaction model, memory and governance |
+| [Interactive showcase](docs/SHOWCASE.md) | Demo truthfulness, local use, static deployment guidance |
+| [API](docs/API.md) | Endpoint contracts and operator actions |
+| [Deployment](docs/DEPLOYMENT.md) | Private deployment setup and infrastructure constraints |
+| [Operations](docs/OPERATIONS.md) | Operational policies and resilience work |
+| [Threat model](docs/THREAT_MODEL.md) | Prompt injection, authority boundaries, approval risks |
+| [Release checklist](docs/RELEASE_CHECKLIST.md) | Implemented controls versus launch blockers |
+| [Security](SECURITY.md) | Disclosure policy and security expectations |
+| [Contributing](CONTRIBUTING.md) | Development collaboration rules |
+| [Agent instructions](AGENTS.md) | Modular engineering conventions for AI coding assistants |
+
+## ◇ Research foundation & independence
+
+This is **original Falvorn AI software** informed by publicly discussed *long-horizon multi-agent behavior* research:
+
+- [Emergence World: A Platform for Evaluating Long-Horizon Multi-Agent Autonomy](https://arxiv.org/abs/2606.08367)
+- [Emergence World: Adversarial Stress-Testing of Long-Horizon Multi-Agent Systems](https://arxiv.org/abs/2609.17320)
+- [EmergenceAI/Emergence-World research repository](https://github.com/EmergenceAI/Emergence-World)
+
+It is **not affiliated with Emergence AI**, does not bundle its datasets/personas/assets, and does not claim to reproduce its experiments. Follow the original authors' separate non-commercial/research licensing terms for their materials.
+
+## ◈ Public visibility ≠ open-source license
+
+**© 2026 Falvorn AI. All rights reserved.** This publicly visible repository does **not** grant permission to copy, redistribute, modify or commercialize its proprietary code. Refer to [LICENSE](LICENSE) before reuse; contributions are subject to the project owner's terms.
+
+<div align="center">
+<br />
+<b>FALVORN AI · WORLDOPS</b><br />
+<sub>Build observable intelligence. Preserve human control.</sub><br /><br />
+<a href="#falvorn-worldops">Back to top ↑</a>
+</div>
