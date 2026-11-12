@@ -1,3 +1,5 @@
+> **Public showcase:** https://falvorn-worldops-showcase.vercel.app/ — a static, simulated UX preview, not a hosted backend. This Vercel deployment was published independently via the deployment API; it is **not linked to GitHub for automatic redeployment**. Redeploy the updated `docs/showcase/index.html` after future visual changes.
+
 # Interactive showcase — accuracy & publishing guide
 
 The source in [showcase/index.html](showcase/index.html) is a **standalone, responsive product demonstration** with no external packages or API dependency. It features animated illustrative agents, a six-zone isometric world, town/workplace scenarios, run/pause/reset/step controls, and fabricated but explicitly labeled demonstration event data.
